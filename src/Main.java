@@ -354,7 +354,9 @@ public class Main {
 	}
 
 	private static void killEverythingButTheProgram() {
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		if (clip.isActive()) {
+			clip.stop();
+		}
 		int counter = 0;
 		for (PlanetaryBody pb : satellites) {
 			synchronized(pb.lock) {
