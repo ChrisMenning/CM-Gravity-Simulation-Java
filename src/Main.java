@@ -19,8 +19,6 @@
 
 // Background Music: "Boy 1904" by Jónsi & Alex, under no valid license, for educational purposes.
 
-// noot noot
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;

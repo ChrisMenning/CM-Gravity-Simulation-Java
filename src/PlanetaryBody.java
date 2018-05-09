@@ -6,7 +6,6 @@
 // Collision detection and bounce reaction based on util-elastic-collision.js by Christopher Lis, found here: 
 // https://gist.github.com/christopher4lis/f9ccb589ee8ecf751481f05a8e59b1dc
 
-// noot noot
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
