@@ -1,6 +1,6 @@
+// noot noot
 import java.awt.Color;
 import java.awt.Rectangle;
-
 
 public class Earth extends PlanetaryBody{
 	private static volatile Earth instance;
