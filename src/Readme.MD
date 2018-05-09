@@ -1,0 +1,1 @@
+This Java program simulates gravity and utilizes multi-thread synchronization to do so.
