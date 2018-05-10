@@ -303,8 +303,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					
 					// Get the direction from p to self.
 					// This can and should be negative sometimes.
-					float xDir = this.xPos - p.getX();
-					float yDir = this.yPos - p.getY();
+					float xDir = p.getX() -this.xPos;
+					float yDir =  p.getY() - this.yPos;
 										
 					// Get the absolute value of X and Y distances from p to self.
 					// This should always be positive.
