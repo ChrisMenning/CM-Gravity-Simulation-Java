@@ -27,7 +27,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	 */
 	
 	// The planet's name and physical properties (fields).
-	private String planetName;
+	private String satelliteName;
 	private long mass; 
 	private double radius;
 	private float xPos;
@@ -58,12 +58,12 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	 * =======================
 	 */
 	
-	public String getPlanetName() {
-		return this.planetName;
+	public String getSatelliteName() {
+		return this.satelliteName;
 	}
 	
-	public void setPlanetName(String name) {
-		this.planetName = name;
+	public void setSatelliteName(String name) {
+		this.satelliteName = name;
 	}
 	
 	public long getMass() {
@@ -192,7 +192,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		setUseSound(true);
 		loadAudio();
 				
-		this.planetName = name;
+		this.satelliteName = name;
 		//this.setColor(colors[getRandomNumberInRange(0, colors.length - 1)]);
 		this.color = Color.WHITE;
 		
@@ -319,7 +319,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 						float gravityX = (float)(p.getX() + (pullOfThisMass * (xDir/getGravityDiviser())));
 						float gravityY = (float)(p.getY() + (pullOfThisMass * (yDir/getGravityDiviser())));
 						
-						if (!p.getPlanetName().equals("Earth"))
+						if (!p.getSatelliteName().equals("Earth"))
 						{
 							p.setX(gravityX);
 							p.setY(gravityY);
@@ -377,10 +377,10 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	        
 	        // For the sake of centering, in lieu of a camera object, the Earth does not move. So...
 	        // If I am the Earth, only bounce pbOther.
-	        if (this.getPlanetName().equals("Earth")) {
+	        if (this.getSatelliteName().equals("Earth")) {
 		        pbOther.setVelocityX(vFinal2[0]);
 		        pbOther.setVelocityY(vFinal2[1]);
-	        } else if (pbOther.getPlanetName().equals("Earth")) {
+	        } else if (pbOther.getSatelliteName().equals("Earth")) {
 	        	
 	        	// But if pbOther is the Earth, then I am not. Bounce only me, and not the Earth.
 	        	pbSelf.setVelocityX(vFinal1[0]);
@@ -457,7 +457,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 			// set the gain scaled to the velocity of the hit.
 			double gain;
 			float dB;
-			if (pbOther.getPlanetName()=="Earth") {
+			if (pbOther.getSatelliteName()=="Earth") {
 				gain = ((Math.abs(pbSelf.getVelocityX()) + Math.abs(pbSelf.getVelocityY()) * (mass/100)) /2 );
 				dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
 			}
@@ -480,7 +480,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	private void flashColor() {
 		Thread thisThread = new Thread() {
 			public void run() {
-				if (!planetName.equals("Earth")) {
+				if (!satelliteName.equals("Earth")) {
 					color = Color.CYAN;
 					try {
 						sleep(32);

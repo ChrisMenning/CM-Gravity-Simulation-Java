@@ -360,7 +360,7 @@ public class Main {
 		for (PlanetaryBody pb : satellites) {
 			 {
 				
-				if (pb.getPlanetName().equals("Earth")) {
+				if (pb.getSatelliteName().equals("Earth")) {
 					Earth.reset();
 				}
 				pb.setKeepAlive(false);
@@ -371,7 +371,7 @@ public class Main {
 					e.printStackTrace();
 				}
 				
-				System.out.println(pb.getPlanetName() + " state: " + pb.getState());
+				System.out.println(pb.getSatelliteName() + " state: " + pb.getState());
 				counter++;
 			}
 		}
@@ -512,10 +512,10 @@ public class Main {
         	synchronized (pb.lock) {
         		pb.setUseGravity(false);
             	pb.setUseInertia(false);
-            	if (pb.getPlanetName().equals("Earth")) {
+            	if (pb.getSatelliteName().equals("Earth")) {
             		pb.setX(orbitFrame.getWidth()/2);
             		pb.setY(orbitFrame.getHeight()/2);
-            	} else if (pb.getPlanetName().equals("Luna")) {
+            	} else if (pb.getSatelliteName().equals("Luna")) {
             		pb.setX((orbitFrame.getWidth()/2) - 200);
         			pb.setY((orbitFrame.getHeight()/2) - 100);
             	}
@@ -530,7 +530,7 @@ public class Main {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-        		if (pb.getPlanetName().equals("Earth")) {
+        		if (pb.getSatelliteName().equals("Earth")) {
                 	pb.setUseGravity(true);
         		}
         		else {
@@ -602,7 +602,7 @@ public class Main {
 			int randomMass = getRandomNumberInRange(2, 12);
 			int pbRadius = 1 + (randomMass);
 			
-			PlanetaryBody pb = new PlanetaryBody("Satellite " + randomMass, (long)randomMass, pbRadius, randomXpos, randomYpos, randomizeInitialX, randomizeInitialY);
+			PlanetaryBody pb = new PlanetaryBody("Satellite " + i, (long)randomMass, pbRadius, randomXpos, randomYpos, randomizeInitialX, randomizeInitialY);
 			satellites.add(pb);
 			//System.out.println(pb.getPlanetName() + "|" + pb.getMass() +"|" + pb.getRadius() + "|" + randomX + "|" + randomY );
 		}

@@ -9,7 +9,7 @@ public class Earth extends PlanetaryBody{
 	public Earth() {
 		loadAudio();
 		this.setColor(Color.WHITE);
-		this.setPlanetName("Earth");
+		this.setSatelliteName("Earth");
 		this.setMass((long)5.972 * (10^24));
 		this.setRadius(60);
 		this.setUseGravity(true);
