@@ -356,8 +356,9 @@ public class Main {
 			clip.stop();
 		}
 		int counter = 0;
+		runUpdateLoop = false;
 		for (PlanetaryBody pb : satellites) {
-			synchronized(pb.lock) {
+			 {
 				
 				if (pb.getPlanetName().equals("Earth")) {
 					Earth.reset();
