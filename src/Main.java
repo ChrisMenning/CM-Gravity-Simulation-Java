@@ -1,6 +1,6 @@
 // This is the Main program for Chris Menning's Final project for 21751: Java 4.
 
-// ATTENTION! Best run after a fresh reboot, with memory to spare.
+// ATTENTION! The more satellites simulated, the more load this will place on your CPU.
 
 // This program simulates gravity, based on Newtonian physics, without the benefit of a physics engine to work with.
 // Each PlanetaryBody exerts a gravitational pull on all others, proportional to its mass, and its distance from each other.
