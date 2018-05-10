@@ -421,10 +421,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		Thread audioThread = new Thread() {
 			public void run() {
 				try {
-					String fileName = "sounds/karma-ron_orch-002-boom.wav";
-					ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-					File soundFile = new File(classLoader.getResource(fileName).getFile());
-					
+					File soundFile = new File("src/sounds/karma-ron_orch-002-boom.wav");
 					audioIn = AudioSystem.getAudioInputStream(soundFile);
 				} catch (UnsupportedAudioFileException e) {
 					e.printStackTrace();

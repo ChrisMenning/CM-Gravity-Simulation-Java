@@ -62,6 +62,7 @@ public class Main {
 	static int maxVert;
 	
 	// The background music.
+	private static File soundFile = new File("src/sounds/Boy_1904.wav");
 	private static AudioInputStream audioIn;
 	private static Clip clip;
 
@@ -121,11 +122,7 @@ public class Main {
 	}
 	private static void loadBackgroundMusic() {
 		try {
-			String fileName = "sounds/Boy_1904.wav";
-			ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-			File file = new File(classLoader.getResource(fileName).getFile());		
-			
-			audioIn = AudioSystem.getAudioInputStream(file);
+			audioIn = AudioSystem.getAudioInputStream(soundFile);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 			System.out.println("UNSUPPORTED AUDIO FILE TYPE");
