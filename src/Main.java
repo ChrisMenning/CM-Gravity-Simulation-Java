@@ -302,7 +302,7 @@ public class Main {
 
 		// Instantiate the rest of the satellites
 		setSatelliteLocations(satLocationCase);
-		InstantiateSatelites();
+		instantiateSatellites();
 		setSatellitesInMotion();
 		
 		// Play Sound FX and music
@@ -355,7 +355,16 @@ public class Main {
 		if (clip.isActive()) {
 			clip.stop();
 		}
-		int counter = 0;
+		killAllSatellites();
+		runUpdateLoop = false;
+		
+		synchronized(satellites) {
+			orbitFrame.dispose();
+		}
+		
+	}
+
+	private static void killAllSatellites() {
 		runUpdateLoop = false;
 		for (PlanetaryBody pb : satellites) {
 			 {
@@ -372,16 +381,9 @@ public class Main {
 				}
 				
 				System.out.println(pb.getSatelliteName() + " state: " + pb.getState());
-				counter++;
 			}
 		}
 		satellites.clear();
-		runUpdateLoop = false;
-		
-		synchronized(satellites) {
-			orbitFrame.dispose();
-		}
-		
 	}
 
 	private static void createButtonPanel() {
@@ -393,8 +395,8 @@ public class Main {
 		// Create the buttons.
         JButton btnReset = new JButton();
         
-        btnReset.setText("Reset Positions");
-        btnReset.setToolTipText("Warning! This resets velocity to 0.");
+        btnReset.setText("Reset");
+        btnReset.setToolTipText("Resets positions and initial velocity.");
         btnReset.addActionListener(new ActionListener()
         {
           public void actionPerformed(ActionEvent e)
@@ -508,38 +510,16 @@ public class Main {
 	}
 
 	private static void doReset() {
-		for (PlanetaryBody pb : satellites) {
-        	synchronized (pb.lock) {
-        		pb.setUseGravity(false);
-            	pb.setUseInertia(false);
-            	if (pb.getSatelliteName().equals("Earth")) {
-            		pb.setX(orbitFrame.getWidth()/2);
-            		pb.setY(orbitFrame.getHeight()/2);
-            	} else if (pb.getSatelliteName().equals("Luna")) {
-            		pb.setX((orbitFrame.getWidth()/2) - 200);
-        			pb.setY((orbitFrame.getHeight()/2) - 100);
-            	}
-            	else {
-            		pb.setX(getRandomNumberInRange(minHoriz, maxHoriz));
-                	pb.setY(getRandomNumberInRange(minVert, maxVert));
-            	}
-
-        		try {
-					Thread.sleep(8);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-        		if (pb.getSatelliteName().equals("Earth")) {
-                	pb.setUseGravity(true);
-        		}
-        		else {
-                	pb.setUseInertia(true);
-                	pb.setUseGravity(true);
-                	pb.randomizeVelocity();
-        		}
-			}
-        }
+		killAllSatellites();
+		instantiateSatellites();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setSatellitesInMotion();
+		
 	}
 	
 	private static void doToggleGravity(JButton btnGravity) {
@@ -576,10 +556,7 @@ public class Main {
         }
 	}
 
-	private static void InstantiateSatelites() {
-		
-		System.out.println("Instantiating. Random X?" + randomizeInitialX + " Random Y?" + randomizeInitialY);
-		
+	private static void instantiateSatellites() {		
 		if (useEarth == true) {
 			// Create the Earth and add it to the satellites list.
 			Earth theEarth = Earth.getInstance();
