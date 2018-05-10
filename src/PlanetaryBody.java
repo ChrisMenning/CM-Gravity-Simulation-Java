@@ -344,6 +344,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		}
 	}
 
+	// This method based on Christopher Lis' util-elastic-collision.js.
 	private void collisionBounce(PlanetaryBody pbSelf, PlanetaryBody pbOther) {
 		float velocityDifferentialX = pbSelf.velocityX - pbOther.velocityX;
 		float velocityDifferentialY = pbSelf.velocityY - pbOther.velocityY;
