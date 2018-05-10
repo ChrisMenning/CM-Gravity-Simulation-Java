@@ -299,7 +299,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					// Newton's equation describes the pull between two objects, but for our purposes
 					// we want to describe the force that this object exerts on another, assuming
 					// the other also does the same.
-					double pullOfThisMass = gravitationalConstant * ((this.mass) / (distance*distance));
+					double pullOfThisMass = gravitationalConstant * (this.mass / (distance*distance));
 					
 					// Get the direction from p to self.
 					// This can and should be negative sometimes.
@@ -336,7 +336,6 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 			if (pb != this) {
 				synchronized(pb.lock) {
 					if (this.getCollider().intersects(pb.getCollider())){
-						//System.out.println(this.getPlanetName() + " collided with " + pb.getPlanetName());
 						collisionBounce(this, pb);
 					}
 				}
@@ -499,10 +498,9 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	}
 
 	public static int getRandomNumberInRange(int min, int max) {
-		if (min >= max) {
+		if (min >= max) 
 			throw new IllegalArgumentException("max must be greater than min");
-		}
-
+		
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
