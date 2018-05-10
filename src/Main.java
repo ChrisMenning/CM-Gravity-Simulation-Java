@@ -158,8 +158,8 @@ public class Main {
 		lblInitialXVel.setHorizontalAlignment(SwingConstants.RIGHT);
 		optionsPanel.add(lblInitialXVel);
 		
-		String[] initialXVel = {"Random", "-2", "-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2"};
-		JComboBox<?> cmbBoxXVel = new JComboBox<String>(initialXVel);
+		String[] initialVel = {"Random", "-2", "-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2"};
+		JComboBox<?> cmbBoxXVel = new JComboBox<String>(initialVel);
 		cmbBoxXVel.setSelectedIndex(4);
 		cmbBoxXVel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,8 +177,7 @@ public class Main {
 		lblInitialYVel.setHorizontalAlignment(SwingConstants.RIGHT);
 		optionsPanel.add(lblInitialYVel);
 		
-		String[] initialYVel = {"Random", "-2", "-1.5", "-1", "-0.5", "0", "0.5", "1", "1.5", "2"};
-		JComboBox<?> cmbBoxYVel = new JComboBox<String>(initialYVel);
+		JComboBox<?> cmbBoxYVel = new JComboBox<String>(initialVel);
 		cmbBoxYVel.setSelectedIndex(0);
 		cmbBoxYVel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
