@@ -350,41 +350,6 @@ public class Main {
 		orbitFrame.add(topPanel);
 	}
 
-	private static void killEverythingButTheProgram() {
-		if (clip.isActive()) {
-			clip.stop();
-		}
-		killAllSatellites();
-		runUpdateLoop = false;
-		
-		synchronized(satellites) {
-			orbitFrame.dispose();
-		}
-		
-	}
-
-	private static void killAllSatellites() {
-		runUpdateLoop = false;
-		for (PlanetaryBody pb : satellites) {
-			 {
-				
-				if (pb.getSatelliteName().equals("Earth")) {
-					Earth.reset();
-				}
-				pb.setKeepAlive(false);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				System.out.println(pb.getSatelliteName() + " state: " + pb.getState());
-			}
-		}
-		satellites.clear();
-	}
-
 	private static void createButtonPanel() {
 		// Create a panel.
 		buttonPanel = new JPanel();
@@ -707,6 +672,41 @@ public class Main {
 
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+
+	private static void killEverythingButTheProgram() {
+		if (clip.isActive()) {
+			clip.stop();
+		}
+		killAllSatellites();
+		runUpdateLoop = false;
+		
+		synchronized(satellites) {
+			orbitFrame.dispose();
+		}
+		
+	}
+
+	private static void killAllSatellites() {
+		runUpdateLoop = false;
+		for (PlanetaryBody pb : satellites) {
+			 {
+				
+				if (pb.getSatelliteName().equals("Earth")) {
+					Earth.reset();
+				}
+				pb.setKeepAlive(false);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println(pb.getSatelliteName() + " state: " + pb.getState());
+			}
+		}
+		satellites.clear();
 	}
 
 }

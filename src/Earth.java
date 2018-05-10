@@ -22,7 +22,7 @@ public class Earth extends PlanetaryBody{
 	public static synchronized Earth getInstance() {
 		
 		if(instance==null) {
-			System.out.println("======== \n NEW EARTH HERE! \n =========");
+			System.out.println("======== \n NEW EARTH HERE! \n=========");
 			instance = new Earth();
 		}
 		return instance;
