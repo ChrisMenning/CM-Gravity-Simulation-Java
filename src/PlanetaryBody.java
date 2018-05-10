@@ -29,7 +29,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	// The planet's name and physical properties (fields).
 	private String satelliteName;
 	private long mass; 
-	private double radius;
+	private int radius;
 	private float xPos;
 	private float yPos;
 	private float velocityX;
@@ -94,7 +94,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		return radius;
 	}
 
-	public void setRadius(double radius) {
+	public void setRadius(int radius) {
 		this.radius = radius;
 	}
 	
@@ -188,7 +188,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	}
 	
 	// Constructor
-	public PlanetaryBody(String name, long mass, double radius, float xPos, float yPos, boolean randomizeXVel, boolean randomizeYVel) {
+	public PlanetaryBody(String name, long mass, int radius, float xPos, float yPos, boolean randomizeXVel, boolean randomizeYVel) {
 		setUseSound(true);
 		loadAudio();
 				

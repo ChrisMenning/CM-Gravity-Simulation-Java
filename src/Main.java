@@ -567,7 +567,7 @@ public class Main {
 		if (useMoon == true) {
 			//double moonMass = 7.34767309 * (10^22);
 			double moonMass = 50;
-			PlanetaryBody theMoon = new PlanetaryBody("Luna", (long)moonMass, 23.9, orbitFrame.getWidth()/2 - 200, orbitFrame.getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
+			PlanetaryBody theMoon = new PlanetaryBody("Luna", (long)moonMass, 24, orbitFrame.getWidth()/2 - 200, orbitFrame.getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
 			satellites.add(theMoon);
 			qtySatellites--;
 		} 
