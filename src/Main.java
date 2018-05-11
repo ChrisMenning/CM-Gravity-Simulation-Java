@@ -45,7 +45,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-
 public class Main {
 	// A list of satellites
 	private static List<PlanetaryBody> satellites = new ArrayList<PlanetaryBody>();
@@ -214,7 +213,8 @@ public class Main {
 	 	lblSatelliteInstantiationLocation.setHorizontalAlignment(SwingConstants.RIGHT);
 	 	optionsPanel.add(lblSatelliteInstantiationLocation);
 	 	
-	 	String[] satLocs = {"All Around - Extend Beyond Window", "All Around - Fit Inside Window", "Above", "Below", "To the Left", "To the Right" };
+	 	String[] satLocs = {"All Around - Extend Beyond Window", 
+	 			"All Around - Fit Inside Window", "Above", "Below", "To the Left", "To the Right" };
 	 	JComboBox<?> cmbBoxSatLocs = new JComboBox<String>(satLocs);
 	 	cmbBoxSatLocs.setToolTipText("Different arrangements of objects have different, interesting effects on the ordiliness of the orbital relationships.");
 	 	cmbBoxSatLocs.setSelectedIndex(2);
@@ -646,19 +646,18 @@ public class Main {
 		Graphics bodyG = orbitFrame.getGraphics();
 
 		try {
-			Thread.sleep(16);
+			Thread.sleep((long)16.67); // Sleep for 1/60th second so the update happens at 60 frames per second.
 			Graphics G = orbitFrame.getGraphics();
 			G.setColor(new Color(6, 16, 23));
-			G.fillRect(0, 35, innerBoundaryWidth, innerBoundaryHeight);
+			G.fillRect(0, 35, innerBoundaryWidth, innerBoundaryHeight); // Paint background.
 			
-			for (PlanetaryBody p : satellites) {
+			for (PlanetaryBody p : satellites) { // Paint all PlanetaryBodies.
 				if (p.getX() > 0 && p.getX() < innerBoundaryWidth && p.getY() > 40 && p.getY() < innerBoundaryHeight + 20) {
 					bodyG.setColor(p.getColor());
 					//draw the ball at the new x and y position
 					bodyG.fillOval((int)p.getX() - (int)p.getRadius()/2, (int)p.getY() - (int)p.getRadius()/2, (int)p.getRadius(), (int)p.getRadius());	
 				}
 			}
-
 		}
 		catch(InterruptedException e) {
 			System.out.println(e);
