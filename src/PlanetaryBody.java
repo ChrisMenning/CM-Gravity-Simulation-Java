@@ -42,7 +42,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	private boolean useInertia;
 	private boolean useSound;
 	private boolean keepAlive;
-	private double gravityDiviser = 10000;
+	private double gravitydivisor = 10000;
 	
 	// Audio
 	private static AudioInputStream audioIn;
@@ -170,12 +170,12 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		this.keepAlive = keepAlive;
 	}
 
-	private double getGravityDiviser() {
-		return gravityDiviser;
+	private double getGravitydivisor() {
+		return gravitydivisor;
 	}
 
-	public void setGravityDiviser(double gravityDiviser) {
-		this.gravityDiviser = gravityDiviser;
+	public void setGravityDivisor(double gravitydivisor) {
+		this.gravitydivisor = gravitydivisor;
 	}	
 	
 	/*
@@ -316,8 +316,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 							|| yDist > this.getRadius()/2 && yDist > p.getRadius()/2){
 						
 						// gravitX and gravityY calculate the pull of this mass, multiplied by a line from self to p.
-						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravityDiviser())));
-						double gravityY = (double)(p.getY() + (pullOfThisMass * (yDir/getGravityDiviser())));
+						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravitydivisor())));
+						double gravityY = (double)(p.getY() + (pullOfThisMass * (yDir/getGravitydivisor())));
 						
 						if (!p.getSatelliteName().equals("Earth"))
 						{

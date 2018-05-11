@@ -415,23 +415,23 @@ public class Main {
         
         buttonPanel.add(btnSound);
         
-        JLabel lblDiviser = new JLabel("Gravity Diviser: ");
-        lblDiviser.setToolTipText("Lower numbers give stronger gravity. Higher, weaker. 1000 is normal scale."); 
-        buttonPanel.add(lblDiviser);
+        JLabel lbldivisor = new JLabel("Gravity divisor: ");
+        lbldivisor.setToolTipText("Lower numbers give stronger gravity. Higher, weaker. 1000 is normal scale."); 
+        buttonPanel.add(lbldivisor);
         
-        String[] divisers = {"100000", "10000", "1000", "100" };
+        String[] divisors = {"100000", "10000", "1000", "100" };
 
-		JComboBox<?> cmbBoxGravityDiviser = new JComboBox<String>(divisers);
-		cmbBoxGravityDiviser.setSelectedIndex(1);
-		cmbBoxGravityDiviser.addActionListener(new ActionListener() {
+		JComboBox<?> cmbBoxGravitydivisor = new JComboBox<String>(divisors);
+		cmbBoxGravitydivisor.setSelectedIndex(1);
+		cmbBoxGravitydivisor.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
-			  int diviser = Integer.parseInt(divisers[cmbBoxGravityDiviser.getSelectedIndex()]);
+			  int divisor = Integer.parseInt(divisors[cmbBoxGravitydivisor.getSelectedIndex()]);
 		  		for (PlanetaryBody pb : satellites) {
-		  			pb.setGravityDiviser(diviser);
+		  			pb.setGravityDivisor(divisor);
 		  		}
 		  	}
 		});
-		buttonPanel.add(cmbBoxGravityDiviser);
+		buttonPanel.add(cmbBoxGravitydivisor);
     }
 	
 	protected static void doToggleSoundFX(JButton btnSound) {
