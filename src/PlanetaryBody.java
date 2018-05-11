@@ -28,12 +28,12 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	
 	// The planet's name and physical properties (fields).
 	private String satelliteName;
-	private long mass; 
+	private double mass; 
 	private int radius;
-	private float xPos;
-	private float yPos;
-	private float velocityX;
-	private float velocityY;
+	private double xPos;
+	private double yPos;
+	private double velocityX;
+	private double velocityY;
 	private Rectangle collider;
 	private Color color;
 	
@@ -42,7 +42,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	private boolean useInertia;
 	private boolean useSound;
 	private boolean keepAlive;
-	private double gravityDiviser = 1000;
+	private double gravityDiviser = 10000;
 	
 	// Audio
 	private static AudioInputStream audioIn;
@@ -66,27 +66,27 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		this.satelliteName = name;
 	}
 	
-	public long getMass() {
+	public double getMass() {
 		return this.mass;
 	}
 	
-	public void setMass(long mass) {
+	public void setMass(double mass) {
 		this.mass = mass;
 	}
 		
-	public float getX() {
+	public double getX() {
 		return xPos;
 	}
 	
-	public void setX(float x ) {
+	public void setX(double x ) {
 		this.xPos = x;
 	}
 	
-	public float getY() {
+	public double getY() {
 		return this.yPos;
 	}
 	
-	public void setY(float y) {
+	public void setY(double y) {
 		this.yPos = y;
 	}
 
@@ -114,19 +114,19 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		this.useInertia = useInertia;
 	}
 
-	public float getVelocityX() {
+	public double getVelocityX() {
 		return velocityX;
 	}
 
-	public void setVelocityX(float inertiaX) {
+	public void setVelocityX(double inertiaX) {
 		this.velocityX = inertiaX;
 	}
 
-	public float getVelocityY() {
+	public double getVelocityY() {
 		return velocityY;
 	}
 
-	public void setVelocityY(float inertiaY) {
+	public void setVelocityY(double inertiaY) {
 		this.velocityY = inertiaY;
 	}
 
@@ -188,7 +188,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	}
 	
 	// Constructor
-	public PlanetaryBody(String name, long mass, int radius, float xPos, float yPos, boolean randomizeXVel, boolean randomizeYVel) {
+	public PlanetaryBody(String name, double mass, int radius, double xPos, double yPos, boolean randomizeXVel, boolean randomizeYVel) {
 		setUseSound(true);
 		loadAudio();
 				
@@ -224,9 +224,9 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	}
 
 	// Velocity Randomizer, used during initialization. (Does not work while object thread is running.)
-	public float randomizeVelocity() {
+	public double randomizeVelocity() {
 		Random rand = new Random();
-		float randVel = (rand.nextFloat() * 2 - 1) * 0.5f;
+		double randVel = (rand.nextDouble() * 2 - 1) * 0.5f;
 		return randVel;
 	}
 
@@ -235,8 +235,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		while(isKeepAlive() == true) {
 			
 			// Get the location for later calculating velocity.
-			float firstX = this.getX();
-			float firstY = this.getY();
+			double firstX = this.getX();
+			double firstY = this.getY();
 			
 			// Apply the inertia calculate from the last loop, or from the randomizer.
 			if (isUseInertia() == true) {
@@ -269,9 +269,9 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 
 	// The Velocity is measured by the difference in the last known position (should be about 8ms) and this one.
 	// This is called after inertia, gravity, and collision physics have been applied for a loop iteration.
-	private void setVelocityForInertia(float firstX, float firstY) {
-		float lastX = this.getX();
-		float lastY = this.getY();
+	private void setVelocityForInertia(double firstX, double firstY) {
+		double lastX = this.getX();
+		double lastY = this.getY();
 		setVelocityX(lastX - firstX) ;
 		setVelocityY(lastY - firstY) ;
 	}
@@ -303,21 +303,21 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					
 					// Get the direction from p to self.
 					// This can and should be negative sometimes.
-					float xDir = p.getX() -this.xPos;
-					float yDir =  p.getY() - this.yPos;
+					double xDir = p.getX() -this.xPos;
+					double yDir =  p.getY() - this.yPos;
 										
 					// Get the absolute value of X and Y distances from p to self.
 					// This should always be positive.
-					float xDist = Math.abs(p.getX() - this.xPos);
-					float yDist = Math.abs(p.getY() - this.yPos);
+					double xDist = Math.abs(p.getX() - this.xPos);
+					double yDist = Math.abs(p.getY() - this.yPos);
 					
 					// Update P's coordinates according to gravity.
 					if (xDist > this.getRadius()/2 && xDist > p.getRadius()/2
 							|| yDist > this.getRadius()/2 && yDist > p.getRadius()/2){
 						
 						// gravitX and gravityY calculate the pull of this mass, multiplied by a line from self to p.
-						float gravityX = (float)(p.getX() + (pullOfThisMass * (xDir/getGravityDiviser())));
-						float gravityY = (float)(p.getY() + (pullOfThisMass * (yDir/getGravityDiviser())));
+						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravityDiviser())));
+						double gravityY = (double)(p.getY() + (pullOfThisMass * (yDir/getGravityDiviser())));
 						
 						if (!p.getSatelliteName().equals("Earth"))
 						{
@@ -345,10 +345,10 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 
 	// This method based on Christopher Lis' util-elastic-collision.js.
 	private void collisionBounce(PlanetaryBody pbSelf, PlanetaryBody pbOther) {
-		float velocityDifferentialX = pbSelf.velocityX - pbOther.velocityX;
-		float velocityDifferentialY = pbSelf.velocityY - pbOther.velocityY;
-		float distanceX = pbSelf.getX() - pbOther.getX();
-		float distanceY = pbSelf.getY() - pbOther.getY();
+		double velocityDifferentialX = pbSelf.velocityX - pbOther.velocityX;
+		double velocityDifferentialY = pbSelf.velocityY - pbOther.velocityY;
+		double distanceX = pbSelf.getX() - pbOther.getX();
+		double distanceY = pbSelf.getY() - pbOther.getY();
 		
 		if (velocityDifferentialX * distanceX + velocityDifferentialY * distanceY >= 0) {
 			double angleBetweenBodies = -Math.atan2(pbOther.getY() - pbSelf.getY(), pbOther.getX() - pbSelf.getX());
@@ -357,21 +357,21 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	        double mass2 = pbOther.getMass();
 
 	        // Angular Velocity before equation
-	        float[] u1 = rotate(pbSelf.getVelocityX(), pbSelf.getVelocityY(), (float)angleBetweenBodies);
-	        float[] u2 = rotate(pbOther.getVelocityX(), pbOther.getVelocityY(), (float)angleBetweenBodies);
+	        double[] u1 = rotate(pbSelf.getVelocityX(), pbSelf.getVelocityY(), (double)angleBetweenBodies);
+	        double[] u2 = rotate(pbOther.getVelocityX(), pbOther.getVelocityY(), (double)angleBetweenBodies);
 	        
 	        // Velocity after 1d collision equation
-	        float[] v1 = new float[2];
-	        v1[0] = (float) (u1[0] * (mass1 - mass2) / (mass1 + mass2) + u2[0] * 2 * mass2 / (mass1 + mass2));
+	        double[] v1 = new double[2];
+	        v1[0] = (double) (u1[0] * (mass1 - mass2) / (mass1 + mass2) + u2[0] * 2 * mass2 / (mass1 + mass2));
 	        v1[1] = u1[1];
 	        	
-	        float[] v2 = new float[2];
-	        v2[0] = (float) (u2[0] * (mass1 - mass2) / (mass1 + mass2) + u1[0] * 2 * mass2 / (mass1 + mass2));
+	        double[] v2 = new double[2];
+	        v2[0] = (double) (u2[0] * (mass1 - mass2) / (mass1 + mass2) + u1[0] * 2 * mass2 / (mass1 + mass2));
 	        v2[1] = u2[1];
 	        
 	        // Final velocity after rotating axis back to original location
-	        float[] vFinal1 = rotate(v1[0], v1[1], (float)-angleBetweenBodies);
-	        float[] vFinal2 = rotate(v2[0], v2[1], (float)-angleBetweenBodies);
+	        double[] vFinal1 = rotate(v1[0], v1[1], (double)-angleBetweenBodies);
+	        double[] vFinal2 = rotate(v2[0], v2[1], (double)-angleBetweenBodies);
 	        
 	        // Swap velocities for realistic bounce effect
 	        
@@ -402,16 +402,16 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		}
 	}
 	
-	// Calculates a rotation by accepting two velocities and an angle, and returns a 2D float.
-	public float[] rotate(float velocityX, float velocityY, float angle) {
-	    float[] rotatedVelocities = new float[2];
-	    rotatedVelocities[0] = (float) (velocityX * Math.cos(angle) - velocityY * Math.sin(angle));
-		rotatedVelocities[1] = (float) (velocityX * Math.sin(angle) + velocityY * Math.cos(angle));
+	// Calculates a rotation by accepting two velocities and an angle, and returns a 2D double.
+	public double[] rotate(double velocityX, double velocityY, double angle) {
+	    double[] rotatedVelocities = new double[2];
+	    rotatedVelocities[0] = (double) (velocityX * Math.cos(angle) - velocityY * Math.sin(angle));
+		rotatedVelocities[1] = (double) (velocityX * Math.sin(angle) + velocityY * Math.cos(angle));
 	    
 	    return rotatedVelocities;
 	}
 	
-	public static double getCombinedDistance(float x1, float y1, float x2, float y2) {
+	public static double getCombinedDistance(double x1, double y1, double x2, double y2) {
 	    double dx = x2 - x1;
 	    double dy = y2 - y1;
 	    return Math.sqrt(dx * dx + dy * dy); 
