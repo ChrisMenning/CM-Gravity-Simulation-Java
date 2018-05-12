@@ -347,13 +347,12 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double distanceX = xPos - pb.getX();
 					double distanceY = yPos - pb.getY();
 					
-					if (distanceX < (this.getRadius() + pb.getRadius()) && distanceX > (this.getRadius() + pb.getRadius())*(7/8)
-							&& distanceY < (this.getRadius() + pb.getRadius()) && distanceY > (this.getRadius() + pb.getRadius())*(7/8)){
+					if (distanceX < (this.getRadius() + pb.getRadius()/2) && distanceX > (this.getRadius() + pb.getRadius())*(7/8)
+							&& distanceY < (this.getRadius() + pb.getRadius()/2) && distanceY > (this.getRadius() + pb.getRadius())*(7/8)){
 						if (this.collider.intersects(pb.collider)) {
 							collisionBounce(this, pb);
 						}
 					}
-
 				}
 			}
 		}
