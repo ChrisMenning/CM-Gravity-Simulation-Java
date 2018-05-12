@@ -43,6 +43,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	private boolean useSound;
 	private boolean keepAlive;
 	private double gravitydivisor = 10000;
+	private boolean useAsteroidsMode;
 	
 	// Audio
 	private static AudioInputStream audioIn;
@@ -234,22 +235,26 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	public void run() {
 		while(isKeepAlive() == true) {
 			
-			//asteroidsMode(); // experimental
-
+			if (isUseAsteroidsMode() == true) {
+				asteroidsMode(); // experimental
+			}
 			
 			// Get the location for later calculating velocity.
 			double firstX = this.getX();
-			double firstY = this.getY();
-			
+			double firstY = this.getY();	
 
 			// Detect collision, and if there is a collision, bounce.
 			detectCollisions();
-						
+			
+			// Do gravity
+			if (isUseGravity() == true) {
+				calculateAndApplyGravity();
+			}	
+			
 			// Apply the inertia calculate from the last loop, or from the randomizer.
 			if (isUseInertia() == true) {
 				applyInertia();
 			}
-			
 			
 			// Wait for 1/2 frame
 			try {
@@ -258,12 +263,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 			catch(InterruptedException e) {
 				System.out.println(e);
 			}
-			
-			// Do gravity
-			if (isUseGravity() == true) {
-				calculateAndApplyGravity();
-			}	
-			
+						
 			if (isUseInertia() == true) {
 				// Get position again, for calculating velocity, to be applied as inertia in the next loop iteration.
 				setVelocityForInertia(firstX, firstY);
@@ -317,8 +317,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double yDist = Math.abs(p.getY() - this.yPos);
 					
 					// Update P's coordinates according to gravity.
-					if (xDist > this.getRadius()/2 + p.getRadius()/2
-							&& yDist > this.getRadius()/2 + p.getRadius()/2){
+					if (xDist > (this.getRadius()/2 + p.getRadius()/2)
+							&& (yDist > this.getRadius()/2 + p.getRadius()/2)) {
 						
 						// gravitX and gravityY calculate the pull of this mass, multiplied by a line from self to p.
 						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravitydivisor())));
@@ -344,10 +344,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double distanceY = yPos - pb.getY();
 					
 					if (distanceX <= (this.getRadius()/2 + pb.getRadius()/2) && distanceX > (this.getRadius()/2 + pb.getRadius()/2)*(7/8)
-							&& distanceY <= (this.getRadius()/2 + pb.getRadius()/2) && distanceY > (this.getRadius()/2 + pb.getRadius()/2)*(7/8) ){
-						if (this.getCollider().intersects(pb.getCollider())){
-							collisionBounce(this, pb);
-						}
+							&& distanceY <= (this.getRadius()/2 + pb.getRadius()/2) && distanceY > (this.getRadius()/2 + pb.getRadius()/2)*(7/8)){
+						collisionBounce(this, pb);
 					}
 
 				}
@@ -532,5 +530,13 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		} else if (this.yPos <= 0) {
 			this.yPos = Main.getOrbitFrame().getHeight();
 		}
+	}
+
+	public boolean isUseAsteroidsMode() {
+		return useAsteroidsMode;
+	}
+
+	public void setUseAsteroidsMode(boolean useAsteroidsMode) {
+		this.useAsteroidsMode = useAsteroidsMode;
 	}
 }

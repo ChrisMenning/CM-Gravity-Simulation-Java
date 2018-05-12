@@ -89,6 +89,8 @@ public class Main {
 
 	private static boolean runUpdateLoop;
 
+	protected static boolean useAsteroidsMode;
+
 	public void setFrame(JFrame thisFrame) {
 		setOrbitFrame(thisFrame);
 	}
@@ -100,6 +102,7 @@ public class Main {
 		initialX = -0.5f;
 		useEarth = true;
 		useMoon = true;
+		useAsteroidsMode = false;
 		satLocationCase = 2;
 		
 		loadBackgroundMusic();
@@ -150,7 +153,7 @@ public class Main {
 		optionsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel optionsPanel = new JPanel();
 		
-		optionsPanel.setLayout(new GridLayout(7,2));
+		optionsPanel.setLayout(new GridLayout(8,2));
 		optionsFrame.add(optionsPanel);
 		
 		JLabel lblInitialXVel = new JLabel("Initial X Velocity");
@@ -260,6 +263,24 @@ public class Main {
 	 		}
 	 	});
 	 	optionsPanel.add(chkBoxUseMoon);
+	 	
+	 	JLabel lblUseAsteroidsMode = new JLabel("'Arcade Mode' (Screen wrap)");
+	 	lblUseAsteroidsMode.setHorizontalAlignment(SwingConstants.RIGHT);
+	 	optionsPanel.add(lblUseAsteroidsMode);
+	 	
+	 	JCheckBox chkBoxUseAsteroidsMode = new JCheckBox();
+	 	chkBoxUseAsteroidsMode.setToolTipText("Satellite positons loop around to the other side of the screen.");
+	 	chkBoxUseAsteroidsMode.setHorizontalAlignment(SwingConstants.LEFT);
+	 	chkBoxUseAsteroidsMode.setSelected(false);
+	 	chkBoxUseAsteroidsMode.addActionListener(new ActionListener() {
+	 		public void actionPerformed(ActionEvent e) {
+	 			if (chkBoxUseAsteroidsMode.isSelected())
+	 			{
+	 				useAsteroidsMode = true;
+	 			}
+	 		}
+	 	});
+	 	optionsPanel.add(chkBoxUseAsteroidsMode);
 	 	
 	 	JButton btnOK = new JButton("OK");
 	 	btnOK.addActionListener(new ActionListener() {
@@ -536,6 +557,12 @@ public class Main {
 			//double moonMass = 50;
 			PlanetaryBody theMoon = new PlanetaryBody("Luna", moonMass, 24, getOrbitFrame().getWidth()/2 - 200, getOrbitFrame().getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
 			satellites.add(theMoon);
+			
+			if (useAsteroidsMode == true) {
+				theMoon.setUseAsteroidsMode(true);
+			} else {
+				theMoon.setUseAsteroidsMode(false);
+			}
 			qtySatellites--;
 		} 
 		for (int i = 0; i < qtySatellites; i++)
@@ -547,6 +574,12 @@ public class Main {
 			
 			PlanetaryBody pb = new PlanetaryBody("Satellite " + i, (long)randomMass, pbRadius, randomXpos, randomYpos, randomizeInitialX, randomizeInitialY);
 			satellites.add(pb);
+			
+			if (useAsteroidsMode == true) {
+				pb.setUseAsteroidsMode(true);
+			} else {
+				pb.setUseAsteroidsMode(false);
+			}
 			//System.out.println(pb.getPlanetName() + "|" + pb.getMass() +"|" + pb.getRadius() + "|" + randomX + "|" + randomY );
 		}
 	}
