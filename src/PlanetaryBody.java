@@ -234,17 +234,22 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	public void run() {
 		while(isKeepAlive() == true) {
 			
+			//asteroidsMode(); // experimental
+
+			
 			// Get the location for later calculating velocity.
 			double firstX = this.getX();
 			double firstY = this.getY();
 			
+
+			// Detect collision, and if there is a collision, bounce.
+			detectCollisions();
+						
 			// Apply the inertia calculate from the last loop, or from the randomizer.
 			if (isUseInertia() == true) {
 				applyInertia();
 			}
 			
-			// Detect collision, and if there is a collision, bounce.
-			detectCollisions();
 			
 			// Wait for 1/2 frame
 			try {
@@ -312,8 +317,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double yDist = Math.abs(p.getY() - this.yPos);
 					
 					// Update P's coordinates according to gravity.
-					if (xDist > this.getRadius()/2 && xDist > p.getRadius()/2
-							|| yDist > this.getRadius()/2 && yDist > p.getRadius()/2){
+					if (xDist > this.getRadius()/2 + p.getRadius()/2
+							&& yDist > this.getRadius()/2 + p.getRadius()/2){
 						
 						// gravitX and gravityY calculate the pull of this mass, multiplied by a line from self to p.
 						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravitydivisor())));
@@ -335,9 +340,16 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		for (PlanetaryBody pb : Main.getSatellites()) {
 			if (pb != this) {
 				synchronized(pb.lock) {
-					if (this.getCollider().intersects(pb.getCollider())){
-						collisionBounce(this, pb);
+					double distanceX = xPos - pb.getX();
+					double distanceY = yPos - pb.getY();
+					
+					if (distanceX <= (this.getRadius()/2 + pb.getRadius()/2) && distanceX > (this.getRadius()/2 + pb.getRadius()/2)*(7/8)
+							&& distanceY <= (this.getRadius()/2 + pb.getRadius()/2) && distanceY > (this.getRadius()/2 + pb.getRadius()/2)*(7/8) ){
+						if (this.getCollider().intersects(pb.getCollider())){
+							collisionBounce(this, pb);
+						}
 					}
+
 				}
 			}
 		}
@@ -503,5 +515,22 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+	
+	// EXPERIMENTAL
+	// Make objects jump to the opposite side of the screen when they go off screen, like in Asteroids or Pac-Man.
+
+	public void asteroidsMode() {
+		if (this.xPos > Main.getOrbitFrame().getWidth()) {
+			this.xPos = 0;
+		} else if (this.xPos <= 0) {
+			this.xPos = Main.getOrbitFrame().getWidth();
+		}
+		
+		if (this.yPos > Main.getOrbitFrame().getHeight()) {
+			this.yPos = 0;
+		} else if (this.yPos <= 0) {
+			this.yPos = Main.getOrbitFrame().getHeight();
+		}
 	}
 }

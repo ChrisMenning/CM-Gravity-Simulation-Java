@@ -90,7 +90,7 @@ public class Main {
 	private static boolean runUpdateLoop;
 
 	public void setFrame(JFrame thisFrame) {
-		orbitFrame = thisFrame;
+		setOrbitFrame(thisFrame);
 	}
 	
 	public static void main(String[] args) {
@@ -284,11 +284,11 @@ public class Main {
 	protected static void createAndDisplayOrbitWindow() {
 		
 		//Create a frame
-		orbitFrame = new JFrame("CM Gravity Simulator");
-		orbitFrame.setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().width * 0.75), (int)(Toolkit.getDefaultToolkit().getScreenSize().height * 0.75));
-		orbitFrame.setDefaultCloseOperation(0);
-		orbitFrame.setLocationRelativeTo(null);
-		orbitFrame.setUndecorated(true);
+		setOrbitFrame(new JFrame("CM Gravity Simulator"));
+		getOrbitFrame().setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().width * 0.75), (int)(Toolkit.getDefaultToolkit().getScreenSize().height * 0.75));
+		getOrbitFrame().setDefaultCloseOperation(0);
+		getOrbitFrame().setLocationRelativeTo(null);
+		getOrbitFrame().setUndecorated(true);
 		
 		// Make the bottom button panel.
 		createButtonPanel();
@@ -297,7 +297,7 @@ public class Main {
 		createTopButtonPanel();
 
 		// Finally, set (or re-set) the frame visibility, to ensure all buttons are showing.
-		orbitFrame.setVisible(true);
+		getOrbitFrame().setVisible(true);
 
 		// Instantiate the rest of the satellites
 		setSatelliteLocations(satLocationCase);
@@ -312,13 +312,13 @@ public class Main {
 
 	private static void createTopButtonPanel() {
 		topPanel = new JPanel();
-		topPanel.setSize(orbitFrame.getWidth(), 35);
-		orbitFrame.add(topPanel, BorderLayout.NORTH);	
+		topPanel.setSize(getOrbitFrame().getWidth(), 35);
+		getOrbitFrame().add(topPanel, BorderLayout.NORTH);	
 
 		JButton btnMinWindow = new JButton("Minimize");
 		btnMinWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				orbitFrame.setState(JFrame.ICONIFIED);
+				getOrbitFrame().setState(JFrame.ICONIFIED);
 			}
 		});
 		topPanel.add(btnMinWindow);
@@ -326,8 +326,8 @@ public class Main {
 		JButton btnRestoreWindow = new JButton("Restore");
 		btnRestoreWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				orbitFrame.setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().width * 0.75), (int)(Toolkit.getDefaultToolkit().getScreenSize().height * 0.75));;
-				orbitFrame.setLocationRelativeTo(null);
+				getOrbitFrame().setSize((int)(Toolkit.getDefaultToolkit().getScreenSize().width * 0.75), (int)(Toolkit.getDefaultToolkit().getScreenSize().height * 0.75));;
+				getOrbitFrame().setLocationRelativeTo(null);
 			}
 		});
 		topPanel.add(btnRestoreWindow);
@@ -335,7 +335,7 @@ public class Main {
 		JButton btnMaxWindow = new JButton("Maximize");
 		btnMaxWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				orbitFrame.setExtendedState(orbitFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+				getOrbitFrame().setExtendedState(getOrbitFrame().getExtendedState() | JFrame.MAXIMIZED_BOTH);
 			}
 		});
 		topPanel.add(btnMaxWindow);
@@ -347,14 +347,14 @@ public class Main {
 			}
 		});
 		topPanel.add(btnCloseWindow);
-		orbitFrame.add(topPanel);
+		getOrbitFrame().add(topPanel);
 	}
 
 	private static void createButtonPanel() {
 		// Create a panel.
 		buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.LIGHT_GRAY);
-		orbitFrame.add(buttonPanel, BorderLayout.SOUTH);
+		getOrbitFrame().add(buttonPanel, BorderLayout.SOUTH);
 		
 		// Create the buttons.
         JButton btnReset = new JButton();
@@ -524,8 +524,8 @@ public class Main {
 		if (useEarth == true) {
 			// Create the Earth and add it to the satellites list.
 			Earth theEarth = Earth.getInstance();
-			theEarth.setX(orbitFrame.getWidth()/2);
-			theEarth.setY(orbitFrame.getHeight()/2);
+			theEarth.setX(getOrbitFrame().getWidth()/2);
+			theEarth.setY(getOrbitFrame().getHeight()/2);
 			satellites.add(theEarth);
 		}
 		
@@ -534,7 +534,7 @@ public class Main {
 			float moonMass = 205.73f;
 			System.out.println("Moon's Mass: " + moonMass);
 			//double moonMass = 50;
-			PlanetaryBody theMoon = new PlanetaryBody("Luna", moonMass, 24, orbitFrame.getWidth()/2 - 200, orbitFrame.getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
+			PlanetaryBody theMoon = new PlanetaryBody("Luna", moonMass, 24, getOrbitFrame().getWidth()/2 - 200, getOrbitFrame().getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
 			satellites.add(theMoon);
 			qtySatellites--;
 		} 
@@ -555,41 +555,41 @@ public class Main {
 		switch(satCase) {
 			case 0:
 				// All around, extending beyond edges.
-				minHoriz = -orbitFrame.getWidth()/2;
-				maxHoriz = orbitFrame.getWidth() + (orbitFrame.getWidth()/2);
-				minVert = -orbitFrame.getHeight()/2;
-				maxVert= orbitFrame.getHeight() + (orbitFrame.getHeight()/2);
+				minHoriz = -getOrbitFrame().getWidth()/2;
+				maxHoriz = getOrbitFrame().getWidth() + (getOrbitFrame().getWidth()/2);
+				minVert = -getOrbitFrame().getHeight()/2;
+				maxVert= getOrbitFrame().getHeight() + (getOrbitFrame().getHeight()/2);
 				break;
 			case 1: // All around, inside edges.
 				minHoriz = 0;
-				maxHoriz = orbitFrame.getWidth();
+				maxHoriz = getOrbitFrame().getWidth();
 				minVert = 0;
-				maxVert= orbitFrame.getHeight();
+				maxVert= getOrbitFrame().getHeight();
 				break;
 			case 2: // Above
-				minHoriz = -orbitFrame.getWidth()/3;
-				maxHoriz = orbitFrame.getWidth() + (orbitFrame.getWidth()/3);
-				minVert = -orbitFrame.getHeight() * (2/ 3);
-				maxVert= orbitFrame.getHeight() /3;
+				minHoriz = -getOrbitFrame().getWidth()/3;
+				maxHoriz = getOrbitFrame().getWidth() + (getOrbitFrame().getWidth()/3);
+				minVert = -getOrbitFrame().getHeight() * (2/ 3);
+				maxVert= getOrbitFrame().getHeight() /3;
 				break;
 			case 3: // Below
-				minHoriz = -orbitFrame.getWidth()/3;
-				maxHoriz = orbitFrame.getWidth() + (orbitFrame.getWidth()/3);
-				minVert = orbitFrame.getHeight()/2;
-				maxVert= orbitFrame.getHeight() + orbitFrame.getHeight() * (1/2);
+				minHoriz = -getOrbitFrame().getWidth()/3;
+				maxHoriz = getOrbitFrame().getWidth() + (getOrbitFrame().getWidth()/3);
+				minVert = getOrbitFrame().getHeight()/2;
+				maxVert= getOrbitFrame().getHeight() + getOrbitFrame().getHeight() * (1/2);
 				break;
 			case 4: // To the left
-				minHoriz = -orbitFrame.getWidth() * (2/3);
-				maxHoriz = (orbitFrame.getWidth()/3);
-				minVert = -orbitFrame.getHeight()/3;
-				maxVert= orbitFrame.getHeight() + orbitFrame.getHeight() /3;
+				minHoriz = -getOrbitFrame().getWidth() * (2/3);
+				maxHoriz = (getOrbitFrame().getWidth()/3);
+				minVert = -getOrbitFrame().getHeight()/3;
+				maxVert= getOrbitFrame().getHeight() + getOrbitFrame().getHeight() /3;
 				break;
 			case 5:
 				// To the Right
-				minHoriz = orbitFrame.getWidth()/2;
-				maxHoriz = orbitFrame.getWidth() + (orbitFrame.getWidth()/2);
-				minVert = -orbitFrame.getHeight()/3;
-				maxVert= orbitFrame.getHeight() + orbitFrame.getHeight() /3;
+				minHoriz = getOrbitFrame().getWidth()/2;
+				maxHoriz = getOrbitFrame().getWidth() + (getOrbitFrame().getWidth()/2);
+				minVert = -getOrbitFrame().getHeight()/3;
+				maxVert= getOrbitFrame().getHeight() + getOrbitFrame().getHeight() /3;
 				break;
 		}
 		
@@ -643,13 +643,13 @@ public class Main {
 	
 	// Draws one still-frame rendering of the scene.
 	public static void updateFrame() {
-		int innerBoundaryWidth = orbitFrame.getWidth();
-		int innerBoundaryHeight = orbitFrame.getHeight() - 70;
-		Graphics bodyG = orbitFrame.getGraphics();
+		int innerBoundaryWidth = getOrbitFrame().getWidth();
+		int innerBoundaryHeight = getOrbitFrame().getHeight() - 70;
+		Graphics bodyG = getOrbitFrame().getGraphics();
 
 		try {
 			Thread.sleep((long)16.67); // Sleep for 1/60th second so the update happens at 60 frames per second.
-			Graphics G = orbitFrame.getGraphics();
+			Graphics G = getOrbitFrame().getGraphics();
 			G.setColor(new Color(6, 16, 23));
 			G.fillRect(0, 35, innerBoundaryWidth, innerBoundaryHeight); // Paint background.
 			
@@ -683,7 +683,7 @@ public class Main {
 		runUpdateLoop = false;
 		
 		synchronized(satellites) {
-			orbitFrame.dispose();
+			getOrbitFrame().dispose();
 		}
 		
 	}
@@ -708,6 +708,14 @@ public class Main {
 			}
 		}
 		satellites.clear();
+	}
+
+	public static JFrame getOrbitFrame() {
+		return orbitFrame;
+	}
+
+	public static void setOrbitFrame(JFrame orbitFrame) {
+		Main.orbitFrame = orbitFrame;
 	}
 
 }
