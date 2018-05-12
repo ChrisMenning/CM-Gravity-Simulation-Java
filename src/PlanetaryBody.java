@@ -366,29 +366,49 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		
 		if (velocityDifferentialX * distanceX + velocityDifferentialY * distanceY >= 0) {
 			double angleBetweenBodies = -Math.atan2(pbOther.getY() - pbSelf.getY(), pbOther.getX() - pbSelf.getX());
-						
+				
+		//	System.out.println(angleBetweenBodies);
+	   //     System.out.println("first velocities " + pbSelf.satelliteName + ": " + pbSelf.getVelocityX() + " | " + pbSelf.getVelocityY());
+	   //     System.out.println("first velocities " + pbOther.satelliteName + ": " + pbOther.getVelocityX() + " | " + pbOther.getVelocityY());
+
 	        double mass1 = pbSelf.getMass();
 	        double mass2 = pbOther.getMass();
 
 	        // Angular Velocity before equation
-	        double[] u1 = rotate(pbSelf.getVelocityX(), pbSelf.getVelocityY(), (double)angleBetweenBodies);
-	        double[] u2 = rotate(pbOther.getVelocityX(), pbOther.getVelocityY(), (double)angleBetweenBodies);
+	     //     double[] u1 = rotate(pbSelf.getVelocityX(), pbSelf.getVelocityY(), (double)angleBetweenBodies);
+	     //     double[] u2 = rotate(pbOther.getVelocityX(), pbOther.getVelocityY(), (double)angleBetweenBodies);
 	        
-	        // Velocity after 1d collision equation
-	        double[] v1 = new double[2];
-	        v1[0] = (double) (u1[0] * (mass1 - mass2) / (mass1 + mass2) + u2[0] * 2 * mass2 / (mass1 + mass2));
-	        v1[1] = u1[1];
-	        	
-	        double[] v2 = new double[2];
-	        v2[0] = (double) (u2[0] * (mass1 - mass2) / (mass1 + mass2) + u1[0] * 2 * mass2 / (mass1 + mass2));
-	        v2[1] = u2[1];
+	        double[] u1 = new double[2];
+	        u1[0] = pbSelf.getVelocityX();
+	        u1[1] = pbSelf.getVelocityY();
+	        
+	        double[] u2 = new double[2];
+	        u2[0] = pbOther.getVelocityX();
+	        u2[1] = pbOther.getVelocityY();
+	        
+	     //   System.out.println("Angular Vel before equation. " + pbSelf.satelliteName + ": " + u1[0] + " | " + u1[1]  );
+	     //   System.out.println("Angular Vel before equation. " + pbOther.satelliteName + ": " + u2[0] + " | " + u2[1]  );
+	        
+	    //    // Velocity after 1d collision equation
+	          double[] v1 = new double[2];
+	          v1[0] = (double) (u1[0] * (mass1 - mass2) / (mass1 + mass2) + u2[0] * 2 * mass2 / (mass1 + mass2));
+	          v1[1] = u1[1];
+	          	
+	          double[] v2 = new double[2];
+	          v2[0] = (double) (u2[0] * (mass1 - mass2) / (mass1 + mass2) + u1[0] * 2 * mass2 / (mass1 + mass2));
+	          v2[1] = u2[1];
 	        
 	        // Final velocity after rotating axis back to original location
-	        double[] vFinal1 = rotate(v1[0], v1[1], (double)-angleBetweenBodies);
-	        double[] vFinal2 = rotate(v2[0], v2[1], (double)-angleBetweenBodies);
+	    //    double[] vFinal1 = rotate(v1[0], v1[1], (double)-angleBetweenBodies);
+	    //    double[] vFinal2 = rotate(v2[0], v2[1], (double)-angleBetweenBodies);
+	        
+	    //    System.out.println("Angular Vel after rotating axis back to original location " + pbSelf.satelliteName + ": " + vFinal1[0] + " | " + vFinal1[1]  );
+	    //    System.out.println("Angular Vel after rotating axis back to original location " + pbOther.satelliteName + ": " + vFinal2[0] + " | " + vFinal2[1]  );
+	      
+        	double[] vFinal1 = v1;
+        	double[] vFinal2 = v2;
 	        
 	        // Swap velocities for realistic bounce effect
-	        
 	        // For the sake of centering, in lieu of a camera object, the Earth does not move. So...
 	        // If I am the Earth, only bounce pbOther.
 	        if (this.getSatelliteName().equals("Earth")) {
@@ -407,8 +427,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		        pbOther.setVelocityX(vFinal2[0]);
 		        pbOther.setVelocityY(vFinal2[1]);		
 		        
-		     //   System.out.println("Collision Velocity: " + pbSelf.getSatelliteName() +"|" + vFinal1[0] + "|" + vFinal1[1]);
-		     //   System.out.println("Collision Velocity: " + pbOther.getSatelliteName() +"|" + vFinal2[0] + "|" + vFinal2[1]);
+		      //  System.out.println("Collision Velocity: " + pbSelf.getSatelliteName() +"|" + vFinal1[0] + "|" + vFinal1[1]);
+		      //  System.out.println("Collision Velocity: " + pbOther.getSatelliteName() +"|" + vFinal2[0] + "|" + vFinal2[1]);
 	        }
 	        
 	        flashColor();
