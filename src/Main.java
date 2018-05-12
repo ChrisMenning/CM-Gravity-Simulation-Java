@@ -91,6 +91,8 @@ public class Main {
 
 	protected static boolean useAsteroidsMode;
 
+	private static boolean useCollisons;
+
 	public void setFrame(JFrame thisFrame) {
 		setOrbitFrame(thisFrame);
 	}
@@ -102,6 +104,7 @@ public class Main {
 		initialX = -0.5f;
 		useEarth = true;
 		useMoon = true;
+		useCollisons = false;
 		useAsteroidsMode = false;
 		satLocationCase = 2;
 		
@@ -394,6 +397,7 @@ public class Main {
         
         JButton btnGravity = new JButton();
         btnGravity.setText("Toggle Gravity");
+        btnGravity.setBackground(Color.CYAN);
         btnGravity.addActionListener(new ActionListener()
         {
           public void actionPerformed(ActionEvent e)
@@ -406,6 +410,7 @@ public class Main {
         
         JButton btnInertia = new JButton();
         btnInertia.setText("Toggle Inertia");
+        btnInertia.setBackground(Color.CYAN);
         btnInertia.addActionListener(new ActionListener()
         {
           public void actionPerformed(ActionEvent e)
@@ -415,9 +420,21 @@ public class Main {
         });
 
         buttonPanel.add(btnInertia);
+        
+        JButton btnCollisions = new JButton();
+        btnCollisions.setText("Toggle Collisions");
+        btnCollisions.setBackground(Color.RED);
+        btnCollisions.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		doToggleCollisions(btnCollisions);
+        	}
+        });
+        
+        buttonPanel.add(btnCollisions);
 
         JButton btnMusic = new JButton();
         btnMusic.setText("Toggle Music");
+        btnMusic.setBackground(Color.CYAN);
         btnMusic.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		doToggleMusic(btnMusic);
@@ -428,6 +445,7 @@ public class Main {
         
         JButton btnSound = new JButton();
         btnSound.setText("Toggle Sound FX");
+        btnSound.setBackground(Color.CYAN);
         btnSound.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		doToggleSoundFX(btnSound);
@@ -455,6 +473,23 @@ public class Main {
 		buttonPanel.add(cmbBoxGravitydivisor);
     }
 	
+	protected static void doToggleCollisions(JButton btnCollisions) {
+		if (useCollisons == true) {
+			for (PlanetaryBody pb : satellites) {
+				pb.setUseCollisions(false);	
+			}
+			useCollisons = false;
+			btnCollisions.setBackground(Color.RED);
+		} else {
+			for (PlanetaryBody pb : satellites) {
+				pb.setUseCollisions(true);
+			}
+			useCollisons = true;
+			btnCollisions.setBackground(Color.CYAN);
+		}
+		
+	}
+
 	protected static void doToggleSoundFX(JButton btnSound) {
 		if (useSoundFX == true) {
 			for (PlanetaryBody pb : satellites) {

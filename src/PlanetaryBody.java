@@ -40,6 +40,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	// Behavior modifiers
 	private boolean useGravity;
 	private boolean useInertia;
+	private boolean useCollisions;
 	private boolean useSound;
 	private boolean keepAlive;
 	private double gravitydivisor = 10000;
@@ -222,6 +223,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		setUseGravity(true);
 		setUseInertia(true);
 		setKeepAlive(true);
+		setUseCollisions(false);
 	}
 
 	// Velocity Randomizer, used during initialization. (Does not work while object thread is running.)
@@ -242,10 +244,12 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 			// Get the location for later calculating velocity.
 			double firstX = this.getX();
 			double firstY = this.getY();	
-
-			// Detect collision, and if there is a collision, bounce.
-			detectCollisions();
 			
+			// Detect collision, and if there is a collision, bounce.
+			if (useCollisions == true) {
+				detectCollisions();
+			}
+
 			// Do gravity
 			if (isUseGravity() == true) {
 				calculateAndApplyGravity();
@@ -317,8 +321,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double yDist = Math.abs(p.getY() - this.yPos);
 					
 					// Update P's coordinates according to gravity.
-					if (xDist > (this.getRadius()/2 + p.getRadius()/2)
-							&& (yDist > this.getRadius()/2 + p.getRadius()/2)) {
+					if (xDist > (this.getRadius() + p.getRadius())
+							&& (yDist > this.getRadius() + p.getRadius())) {
 						
 						// gravitX and gravityY calculate the pull of this mass, multiplied by a line from self to p.
 						double gravityX = (double)(p.getX() + (pullOfThisMass * (xDir/getGravitydivisor())));
@@ -343,8 +347,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double distanceX = xPos - pb.getX();
 					double distanceY = yPos - pb.getY();
 					
-					if (distanceX <= (this.getRadius()/2 + pb.getRadius()/2) && distanceX > (this.getRadius()/2 + pb.getRadius()/2)*(7/8)
-							&& distanceY <= (this.getRadius()/2 + pb.getRadius()/2) && distanceY > (this.getRadius()/2 + pb.getRadius()/2)*(7/8)){
+					if (distanceX <= (this.getRadius() + pb.getRadius()) && distanceX > (this.getRadius() + pb.getRadius())*(7/8)
+							&& distanceY <= (this.getRadius() + pb.getRadius()) && distanceY > (this.getRadius() + pb.getRadius())*(7/8)){
 						collisionBounce(this, pb);
 					}
 
@@ -355,8 +359,8 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 
 	// This method based on Christopher Lis' util-elastic-collision.js.
 	private void collisionBounce(PlanetaryBody pbSelf, PlanetaryBody pbOther) {
-		double velocityDifferentialX = pbSelf.velocityX - pbOther.velocityX;
-		double velocityDifferentialY = pbSelf.velocityY - pbOther.velocityY;
+		double velocityDifferentialX = pbSelf.getVelocityX() - pbOther.getVelocityX();
+		double velocityDifferentialY = pbSelf.getVelocityY()- pbOther.getVelocityY();
 		double distanceX = pbSelf.getX() - pbOther.getX();
 		double distanceY = pbSelf.getY() - pbOther.getY();
 		
@@ -401,7 +405,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	        	pbSelf.setVelocityX(vFinal1[0]);
 		        pbSelf.setVelocityY(vFinal1[1]);
 		        pbOther.setVelocityX(vFinal2[0]);
-		        pbOther.setVelocityY(vFinal2[1]);
+		        pbOther.setVelocityY(vFinal2[1]);		        
 	        }
 	        
 	        flashColor();
@@ -538,5 +542,10 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 
 	public void setUseAsteroidsMode(boolean useAsteroidsMode) {
 		this.useAsteroidsMode = useAsteroidsMode;
+	}
+
+	public void setUseCollisions(boolean b) {
+		this.useCollisions = b;
+		
 	}
 }

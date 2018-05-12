@@ -17,6 +17,7 @@ public class Earth extends PlanetaryBody{
 		this.setRadius(60);
 		this.setUseGravity(true);
 		this.setUseInertia(true);
+		this.setUseCollisions(false);
 		this.setKeepAlive(true);
 		this.setCollider(new Rectangle((int)getX(), (int)getY(), (int)getRadius() * (1 + (1/2)), (int)getRadius() * (1 + (1/2))));
 	}
