@@ -530,7 +530,8 @@ public class Main {
 		}
 		
 		if (useMoon == true) {
-			double moonMass = 7.34767309 * (10^22);
+			//double moonMass = 7.34767309 * (10^22);
+			float moonMass = 205.73f;
 			System.out.println("Moon's Mass: " + moonMass);
 			//double moonMass = 50;
 			PlanetaryBody theMoon = new PlanetaryBody("Luna", moonMass, 24, orbitFrame.getWidth()/2 - 200, orbitFrame.getHeight()/2 +100, randomizeInitialX, randomizeInitialY);

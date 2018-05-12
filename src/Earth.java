@@ -10,8 +10,8 @@ public class Earth extends PlanetaryBody{
 		loadAudio();
 		this.setColor(Color.WHITE);
 		this.setSatelliteName("Earth");
-		double rawMass = 59.72 * (10^24);
-		this.setMass(rawMass);
+		//float rawMass = 59.72 * (10^24);
+		this.setMass(1074.96f);
 		System.out.println("Earth's mass: " + this.getMass());
 		System.out.println("Gravitational Constant: " + gravitationalConstant);
 		this.setRadius(60);

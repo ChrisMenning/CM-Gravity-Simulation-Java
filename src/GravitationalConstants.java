@@ -1,4 +1,4 @@
 public interface GravitationalConstants {
 	
-	double gravitationalConstant = (6.674 * (10^-11));
+	float gravitationalConstant = (float)(6.674 * (10^-11));
 }

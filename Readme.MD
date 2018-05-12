@@ -18,6 +18,3 @@
    Collision detection and bounce reaction based on util-elastic-collision.js by Christopher Lis, found here: 
    https://gist.github.com/christopher4lis/f9ccb589ee8ecf751481f05a8e59b1dc
    
-   TODO: 
-   Explore using BigDecimal (and its associated math methods) so the very big numbers don't overflow. This won't increase performance
-   but will increase accuracy of simulation.
