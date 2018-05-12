@@ -347,9 +347,11 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 					double distanceX = xPos - pb.getX();
 					double distanceY = yPos - pb.getY();
 					
-					if (distanceX <= (this.getRadius() + pb.getRadius()) && distanceX > (this.getRadius() + pb.getRadius())*(7/8)
-							&& distanceY <= (this.getRadius() + pb.getRadius()) && distanceY > (this.getRadius() + pb.getRadius())*(7/8)){
-						collisionBounce(this, pb);
+					if (distanceX < (this.getRadius() + pb.getRadius()) && distanceX > (this.getRadius() + pb.getRadius())*(7/8)
+							&& distanceY < (this.getRadius() + pb.getRadius()) && distanceY > (this.getRadius() + pb.getRadius())*(7/8)){
+						if (this.collider.intersects(pb.collider)) {
+							collisionBounce(this, pb);
+						}
 					}
 
 				}
@@ -412,20 +414,31 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	        // For the sake of centering, in lieu of a camera object, the Earth does not move. So...
 	        // If I am the Earth, only bounce pbOther.
 	        if (this.getSatelliteName().equals("Earth")) {
-		        pbOther.setVelocityX(vFinal2[0]);
-		        pbOther.setVelocityY(vFinal2[1]);
+	        	synchronized(pbOther.lock) {
+			        pbOther.setVelocityX(vFinal2[0]);
+			        pbOther.setVelocityY(vFinal2[1]);
+	        	}
+
 	        } else if (pbOther.getSatelliteName().equals("Earth")) {
 	        	
 	        	// But if pbOther is the Earth, then I am not. Bounce only me, and not the Earth.
-	        	pbSelf.setVelocityX(vFinal1[0]);
-		        pbSelf.setVelocityY(vFinal1[1]);
+	        	synchronized(this.lock) {
+		        	pbSelf.setVelocityX(vFinal1[0]);
+			        pbSelf.setVelocityY(vFinal1[1]);
+	        	}
 	        } else {
 	        	
 	        	// If neither of us is the Earth, bounce each other.
-	        	pbSelf.setVelocityX(vFinal1[0]);
-		        pbSelf.setVelocityY(vFinal1[1]);
-		        pbOther.setVelocityX(vFinal2[0]);
-		        pbOther.setVelocityY(vFinal2[1]);		
+	        	synchronized(this.lock) {
+		        	pbSelf.setVelocityX(vFinal1[0]);
+			        pbSelf.setVelocityY(vFinal1[1]);
+	        	}
+
+	        	synchronized(pbOther.lock) {
+			        pbOther.setVelocityX(vFinal2[0]);
+			        pbOther.setVelocityY(vFinal2[1]);	
+	        	}
+	
 		        
 		      //  System.out.println("Collision Velocity: " + pbSelf.getSatelliteName() +"|" + vFinal1[0] + "|" + vFinal1[1]);
 		      //  System.out.println("Collision Velocity: " + pbOther.getSatelliteName() +"|" + vFinal2[0] + "|" + vFinal2[1]);
