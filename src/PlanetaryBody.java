@@ -366,7 +366,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 		
 		if (velocityDifferentialX * distanceX + velocityDifferentialY * distanceY >= 0) {
 			double angleBetweenBodies = -Math.atan2(pbOther.getY() - pbSelf.getY(), pbOther.getX() - pbSelf.getX());
-			
+						
 	        double mass1 = pbSelf.getMass();
 	        double mass2 = pbOther.getMass();
 
@@ -405,7 +405,10 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	        	pbSelf.setVelocityX(vFinal1[0]);
 		        pbSelf.setVelocityY(vFinal1[1]);
 		        pbOther.setVelocityX(vFinal2[0]);
-		        pbOther.setVelocityY(vFinal2[1]);		        
+		        pbOther.setVelocityY(vFinal2[1]);		
+		        
+		     //   System.out.println("Collision Velocity: " + pbSelf.getSatelliteName() +"|" + vFinal1[0] + "|" + vFinal1[1]);
+		     //   System.out.println("Collision Velocity: " + pbOther.getSatelliteName() +"|" + vFinal2[0] + "|" + vFinal2[1]);
 	        }
 	        
 	        flashColor();
@@ -421,7 +424,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	    double[] rotatedVelocities = new double[2];
 	    rotatedVelocities[0] = (double) (velocityX * Math.cos(angle) - velocityY * Math.sin(angle));
 		rotatedVelocities[1] = (double) (velocityX * Math.sin(angle) + velocityY * Math.cos(angle));
-	    
+		
 	    return rotatedVelocities;
 	}
 	
