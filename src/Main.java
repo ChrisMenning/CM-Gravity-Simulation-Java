@@ -281,6 +281,9 @@ public class Main {
 	 			{
 	 				useAsteroidsMode = true;
 	 			}
+	 			else {
+	 				useAsteroidsMode = false;
+	 			}
 	 		}
 	 	});
 	 	optionsPanel.add(chkBoxUseAsteroidsMode);
@@ -458,10 +461,10 @@ public class Main {
         lbldivisor.setToolTipText("Lower numbers give stronger gravity. Higher, weaker. 1000 is normal scale."); 
         buttonPanel.add(lbldivisor);
         
-        String[] divisors = {"100000", "10000", "1000", "100" };
+        String[] divisors = {"100000", "10000", "5000", "1000", "100" };
 
 		JComboBox<?> cmbBoxGravitydivisor = new JComboBox<String>(divisors);
-		cmbBoxGravitydivisor.setSelectedIndex(1);
+		cmbBoxGravitydivisor.setSelectedIndex(2);
 		cmbBoxGravitydivisor.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			  int divisor = Integer.parseInt(divisors[cmbBoxGravitydivisor.getSelectedIndex()]);
@@ -587,9 +590,9 @@ public class Main {
 		
 		if (useMoon == true) {
 			//double moonMass = 7.34767309 * (10^22);
-			float moonMass = 205.73f;
+			//float moonMass = 205.73f;
+			float moonMass = 20;
 			System.out.println("Moon's Mass: " + moonMass);
-			//double moonMass = 50;
 			PlanetaryBody theMoon = new PlanetaryBody("Luna", moonMass, 24, getOrbitFrame().getWidth()/2 - 200, getOrbitFrame().getHeight()/2 +100, randomizeInitialX, randomizeInitialY);
 			satellites.add(theMoon);
 			
@@ -604,8 +607,8 @@ public class Main {
 		{
 			int randomXpos = getRandomNumberInRange(minHoriz, maxHoriz);
 			int randomYpos = getRandomNumberInRange(minVert, maxVert);
-			int randomMass = getRandomNumberInRange(20, 120);
-			int pbRadius = randomMass/10;
+			int randomMass = getRandomNumberInRange(2, 12);
+			int pbRadius = randomMass;
 			
 			PlanetaryBody pb = new PlanetaryBody("Satellite " + i, (long)randomMass, pbRadius, randomXpos, randomYpos, randomizeInitialX, randomizeInitialY);
 			satellites.add(pb);
