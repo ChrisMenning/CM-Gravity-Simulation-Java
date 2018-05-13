@@ -461,10 +461,10 @@ public class Main {
         lbldivisor.setToolTipText("Lower numbers give stronger gravity. Higher, weaker. 1000 is normal scale."); 
         buttonPanel.add(lbldivisor);
         
-        String[] divisors = {"100000", "10000", "5000", "1000", "100" };
+        String[] divisors = {"100000", "10000", "5000", "1000", "500", "100" };
 
 		JComboBox<?> cmbBoxGravitydivisor = new JComboBox<String>(divisors);
-		cmbBoxGravitydivisor.setSelectedIndex(2);
+		cmbBoxGravitydivisor.setSelectedIndex(3);
 		cmbBoxGravitydivisor.addActionListener(new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			  int divisor = Integer.parseInt(divisors[cmbBoxGravitydivisor.getSelectedIndex()]);
