@@ -43,7 +43,7 @@ public class PlanetaryBody extends Thread implements GravitationalConstants{
 	private boolean useCollisions;
 	private boolean useSound;
 	private boolean keepAlive;
-	private double gravitydivisor = 5000;
+	private double gravitydivisor = 1000;
 	private boolean useAsteroidsMode;
 	
 	// Audio
